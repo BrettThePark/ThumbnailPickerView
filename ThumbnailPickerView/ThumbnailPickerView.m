@@ -27,9 +27,10 @@
 //
 
 #import "ThumbnailPickerView.h"
+#import <QuartzCore/QuartzCore.h>
 
-static const CGSize kThumbnailSize        = {16, 13};
-static const CGSize kBigThumbnailSize     = {36, 27};
+static const CGSize kThumbnailSize        = {66, 66};
+static const CGSize kBigThumbnailSize     = {66, 66};
 static const NSUInteger kThumbnailSpacing = 1;
 
 static const NSUInteger kTagOffset = 100;
@@ -227,12 +228,12 @@ static const NSUInteger kBigThumbnailTagOffset = 1000;
 
         dispatch_queue_t imageLoadingQueue = dispatch_queue_create("image loading queue", NULL);
         dispatch_async(imageLoadingQueue, ^{
-            UIImage *image = [self.dataSource thumbnailPickerView:self imageAtIndex:index];
+            UIImage *image = [self.dataSource thumbnailPickerView:self imageAtIndex:index forImageView:imageView];
             dispatch_async(dispatch_get_main_queue(),^{
                 imageView.image = image;
             });
         });
-        dispatch_release(imageLoadingQueue);
+//        dispatch_release(imageLoadingQueue);
     }
     [self _updateBigThumbnailPositionVerbose:NO animated:NO];
 }
@@ -243,7 +244,7 @@ static const NSUInteger kBigThumbnailTagOffset = 1000;
     if (imageView) {
         dispatch_queue_t imageLoadingQueue = dispatch_queue_create("image loading queue", NULL);
         dispatch_async(imageLoadingQueue, ^{
-            UIImage *image = [self.dataSource thumbnailPickerView:self imageAtIndex:index];
+            UIImage *image = [self.dataSource thumbnailPickerView:self imageAtIndex:index forImageView:imageView];
             dispatch_async(dispatch_get_main_queue(),^{
                 imageView.image = image;
                 if (index == self.selectedIndex) {
@@ -251,7 +252,7 @@ static const NSUInteger kBigThumbnailTagOffset = 1000;
                 }
             });
         });
-        dispatch_release(imageLoadingQueue);
+//        dispatch_release(imageLoadingQueue);
     }
 }
 
@@ -307,12 +308,12 @@ static const NSUInteger kBigThumbnailTagOffset = 1000;
             self.bigThumbnailImageView.center = [self.contentView convertPoint:subview.center toView:self];
             dispatch_queue_t imageLoadingQueue = dispatch_queue_create("image loading queue", NULL);
             dispatch_async(imageLoadingQueue, ^{
-                UIImage *image = [self.dataSource thumbnailPickerView:self imageAtIndex:self.selectedIndex];
+                UIImage *image = [self.dataSource thumbnailPickerView:self imageAtIndex:self.selectedIndex forImageView:self.bigThumbnailImageView];
                 dispatch_async(dispatch_get_main_queue(),^{
                     self.bigThumbnailImageView.image = image;
                 });
             });
-            dispatch_release(imageLoadingQueue);
+//            dispatch_release(imageLoadingQueue);
         };
 
         if (animated)

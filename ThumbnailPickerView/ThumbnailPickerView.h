@@ -38,7 +38,7 @@
 
 @protocol ThumbnailPickerViewDataSource <NSObject>
 - (NSUInteger)numberOfImagesForThumbnailPickerView:(ThumbnailPickerView *)thumbnailPickerView;
-- (UIImage *)thumbnailPickerView:(ThumbnailPickerView *)thumbnailPickerView imageAtIndex:(NSUInteger)index;
+- (UIImage *)thumbnailPickerView:(ThumbnailPickerView *)thumbnailPickerView imageAtIndex:(NSUInteger)index forImageView:(UIImageView *) imageView;
 @end
 
 
